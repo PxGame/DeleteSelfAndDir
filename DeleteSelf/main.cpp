@@ -81,18 +81,46 @@ bool SelfDelete()
     return false;
 }
 
-int WINAPI WinMain(
-    HINSTANCE hInstance,
-    HINSTANCE hPrevInstance,
-    LPSTR lpCmdLine,
-    int nCmdShow
-    )
+class CMainApp :
+    public CWinApp
 {
+public:
+    CMainApp ();
+    ~CMainApp ();
+
+private:
+public:
+    virtual BOOL InitInstance();
+    virtual int ExitInstance();
+};
+
+CMainApp ::CMainApp ()
+{
+}
+
+CMainApp ::~CMainApp ()
+{
+}
+
+BOOL CMainApp::InitInstance()
+{
+    // TODO:  在此添加专用代码和/或调用基类
+
+    return CWinApp::InitInstance();
+}
+
+int CMainApp::ExitInstance()
+{
+    // TODO:  在此添加专用代码和/或调用基类
+
     TCHAR dirPath[MAX_PATH] = { 0 };
     GetModuleFileName(0, dirPath, sizeof(dirPath));
     PathRemoveFileSpec(dirPath);
     DeleteDirectory(dirPath);
 
     SelfDelete();
-    return 0;
+
+    return CWinApp::ExitInstance();
 }
+
+CMainApp theApp;
